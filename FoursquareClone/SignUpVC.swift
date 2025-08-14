@@ -19,7 +19,29 @@ class SignUpVC: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        setupPasswordToggle()
+    }
+    
+    func setupPasswordToggle() {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        button.tintColor = .gray
+        button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        button.contentMode = .scaleAspectFit
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 0)
+        button.addTarget(self, action: #selector(togglePasswordView), for: .touchUpInside)
 
+        passwordText.rightView = button
+        passwordText.rightViewMode = .always
+        passwordText.isSecureTextEntry = true
+    }
+
+
+    @objc func togglePasswordView(_ sender: UIButton) {
+        passwordText.isSecureTextEntry.toggle()
+        
+        let imageName = passwordText.isSecureTextEntry ? "eye.slash" : "eye"
+        sender.setImage(UIImage(systemName: imageName), for: .normal)
     }
     
     @IBAction func signInClicked(_ sender: Any) {
