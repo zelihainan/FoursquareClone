@@ -1,1 +1,13 @@
 FoursquareClone/AppDelegate.swift
+# Xcode
+DerivedData/
+build/
+xcuserdata/
+*.xcuserstate
+
+# CocoaPods
+Pods/
+
+# SwiftPM
+.build/
+FoursquareClone/AppDelegate.swift
