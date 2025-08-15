@@ -21,20 +21,19 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         super.viewDidLoad()
         
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveButtonClicked))
-        
         navigationController?.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonClicked))
         
         mapView.delegate = self
         mapView.showsUserLocation = true
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
         let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(chooseLocation(gestureRecognizer:)))
-        recognizer.minimumPressDuration = 3
+        recognizer.minimumPressDuration = 2
         mapView.addGestureRecognizer(recognizer)
-        
         
     }
     
@@ -56,6 +55,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager.stopUpdatingLocation()
+        
         let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: location, span: span)
@@ -63,7 +63,9 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     @objc func saveButtonClicked() {
+        
         //PARSE
+        
         let placeModel = PlaceModel.sharedInstance
         let object = PFObject(className: "Places")
         
@@ -76,13 +78,15 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         if let imageData = placeModel.placeImage.jpegData(compressionQuality: 0.8) {
             object["image"] = PFFileObject(name: "image.jpg",data: imageData)
         }
+        
         object.saveInBackground {(success, error) in
             if error != nil {
                 let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
                 let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alert.addAction(okButton)
                 self.present(alert, animated: true, completion: nil)
-            }else {
+            }
+            else {
                 self.performSegue(withIdentifier: "fromMapVCtoPlacesVC", sender: nil)
             }
         }
@@ -91,6 +95,4 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @objc func backButtonClicked() {
         self.dismiss(animated: true, completion: nil)
     }
-
-
 }

@@ -9,8 +9,7 @@ import UIKit
 import MapKit
 import Parse
 
-class DetailsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
-    
+class DetailsVC: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var detailsImageView: UIImageView!
     @IBOutlet weak var detailsPlaceName: UILabel!
@@ -39,6 +38,7 @@ class DetailsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate 
                 if objects != nil {
                     if objects!.count > 0 {
                         let chosenPlaceObject = objects![0]
+                        
                         if let placeName = chosenPlaceObject.object(forKey: "name") as? String {
                             self.detailsPlaceName.text = placeName
                         }
@@ -84,6 +84,7 @@ class DetailsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate 
             }
         }
     }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: any MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
@@ -91,13 +92,13 @@ class DetailsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate 
         
         let reuseId = "pin"
         var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
+        
         if pinView == nil {
             pinView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView?.canShowCallout = true
             let button = UIButton(type: .detailDisclosure)
             pinView?.rightCalloutAccessoryView = button
         }else {
-            
             pinView?.annotation = annotation
         }
         return pinView
@@ -105,12 +106,11 @@ class DetailsVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate 
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if self.chosenLatitude != 0.0 && self.chosenLongitude != 0.0 {
-            let requestLocation = CLLocation(latitude: self.chosenLatitude, longitude: self.chosenLongitude)
             
             CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: self.chosenLatitude, longitude: self.chosenLongitude)) { (placemarks, error) in
+                
                 if let placemark = placemarks {
                     if placemark.count > 0 {
-                        
                         let mkPlacemark = MKPlacemark(placemark: placemark[0])
                         let mapItem = MKMapItem(placemark: mkPlacemark)
                         mapItem.name = self.detailsPlaceName.text!

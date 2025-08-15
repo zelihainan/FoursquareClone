@@ -18,6 +18,7 @@ class AddPlaceVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         super.viewDidLoad()
 
         placeImageView.isUserInteractionEnabled = true
+        
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(chooseImage))
         placeImageView.addGestureRecognizer(gestureRecognizer)
     }

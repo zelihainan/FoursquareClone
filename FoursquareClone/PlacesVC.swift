@@ -29,8 +29,10 @@ class PlacesVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
     }
     
     func getDataFromParse() {
+        
         let query = PFQuery(className: "Places")
         query.findObjectsInBackground { (objects, error) in
+            
             if error != nil {
                 self.makeAlert(title: "Error", message: error?.localizedDescription ?? "Error")
             }else {
@@ -56,6 +58,7 @@ class PlacesVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         self.performSegue(withIdentifier: "toAddPlaceVC", sender: self)
         
     }
+    
     @objc func logoutButtonClicked() {
         PFUser.logOutInBackground { (error) in
             if error != nil {
@@ -65,18 +68,16 @@ class PlacesVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
                 self.performSegue(withIdentifier: "toSignUpVC", sender: self)
             }
         }
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetailsVC" {
             let destinationVC = segue.destination as! DetailsVC
-            if let indexPath = tableView.indexPathForSelectedRow {
                 destinationVC.chosenPlaceId = selectedPlaceId
-                
-            }
+            
         }
     }
+    
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedPlaceId = placeIdArray[indexPath.row]
          self.performSegue(withIdentifier: "toDetailsVC", sender: nil)
@@ -88,6 +89,7 @@ class PlacesVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         cell.textLabel?.text = placeNameArray[indexPath.row]
         return cell
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return placeNameArray.count
     }

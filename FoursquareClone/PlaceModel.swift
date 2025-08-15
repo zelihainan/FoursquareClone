@@ -15,6 +15,5 @@ class PlaceModel
     var placeType = ""
     var placeAtmosphere = ""
     var placeImage = UIImage()
-    
-    
+
 }
