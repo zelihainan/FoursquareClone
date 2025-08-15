@@ -20,6 +20,7 @@ An iOS app where users can create and explore location-based entries with photos
 
 ## Screenshots
 <p align="left">
+<img width="190" alt="Simulator Screenshot - iPhone 16 Pro - 2025-08-15 at 22 48 32" src="https://github.com/user-attachments/assets/7a4160be-be93-4e61-8a33-29c8177fa701" />
 <img width="190" alt="1" src="https://github.com/user-attachments/assets/1bfe8098-d9b8-40fe-9297-261ad424b64d" />
 <img width="190" alt="2" src="https://github.com/user-attachments/assets/8196bb66-16c2-4061-9b60-d9c318436725" />
 <img width="190" alt="3" src="https://github.com/user-attachments/assets/d1d884b0-3afe-4f3c-aa01-21a91b66b012" />
