@@ -25,6 +25,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         navigationController?.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonClicked))
         
         mapView.delegate = self
+        mapView.showsUserLocation = true
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
