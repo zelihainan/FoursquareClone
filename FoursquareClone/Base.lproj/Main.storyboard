@@ -114,7 +114,7 @@
                         <outlet property="tableView" destination="e1g-cE-QZW" id="XW2-pH-JYG"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="toSignUpVC" modalPresentationStyle="fullScreen" id="fjC-DD-c8k"/>
                         <segue destination="ynt-Vb-B0h" kind="show" identifier="toAddPlaceVC" id="xQL-sP-Tt2"/>
-                        <segue destination="5Lp-ah-KEd" kind="show" id="JiO-yM-FZC"/>
+                        <segue destination="5Lp-ah-KEd" kind="show" identifier="toDetailsVC" id="JiO-yM-FZC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D9u-7f-eSa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -246,6 +246,7 @@
                     <navigationItem key="navigationItem" id="soo-EU-7vr"/>
                     <connections>
                         <outlet property="mapView" destination="Ss7-r9-fNx" id="3bA-TZ-m0v"/>
+                        <segue destination="DUM-RS-0qD" kind="presentation" identifier="fromMapVCtoPlacesVC" modalPresentationStyle="fullScreen" id="Ogl-ID-JGN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SXE-H3-NUr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -350,6 +351,9 @@
             <point key="canvasLocation" x="1800.7633587786258" y="790.84507042253529"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Ogl-ID-JGN"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="selectanimage" width="1024" height="1024"/>
         <systemColor name="systemBackgroundColor">

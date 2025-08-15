@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import Parse
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
@@ -21,7 +22,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveButtonClicked))
         
-        navigationController?.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(title: "< Back", style: .plain, target: self, action: #selector(backButtonClicked))
+        navigationController?.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonClicked))
         
         mapView.delegate = self
         locationManager.delegate = self
@@ -30,7 +31,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
         
         let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(chooseLocation(gestureRecognizer:)))
-        recognizer.minimumPressDuration = 0.5
+        recognizer.minimumPressDuration = 3
         mapView.addGestureRecognizer(recognizer)
         
         
@@ -62,7 +63,28 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     @objc func saveButtonClicked() {
         //PARSE
+        let placeModel = PlaceModel.sharedInstance
+        let object = PFObject(className: "Places")
         
+        object["name"] = placeModel.placeName
+        object["type"] = placeModel.placeType
+        object["atmosphere"] = placeModel.placeAtmosphere
+        object["latitude"] = chosenLatitude
+        object["longitude"] = chosenLongitude
+        
+        if let imageData = placeModel.placeImage.jpegData(compressionQuality: 0.8) {
+            object["image"] = PFFileObject(name: "image.jpg",data: imageData)
+        }
+        object.saveInBackground {(success, error) in
+            if error != nil {
+                let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(okButton)
+                self.present(alert, animated: true, completion: nil)
+            }else {
+                self.performSegue(withIdentifier: "fromMapVCtoPlacesVC", sender: nil)
+            }
+        }
     }
     
     @objc func backButtonClicked() {
